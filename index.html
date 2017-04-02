@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="./three.min.js"></script>
+<script>
+function dog(){
+var camera, scene, renderer;
+var geometry, material, mesh;
+var mesh2,cube;
+init();
+animate();
+var meX = 1;
+var meY = 1;
+
+function init() {
+
+    camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 4000;
+    camera.position.x = 0;
+    camera.position.y = 0;
+
+
+    scene = new THREE.Scene();
+
+    geometry = new THREE.BoxGeometry(2000, 2000, 2000);
+    material = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        wireframe: true
+    });
+    var geometry2,material2;
+    geometry2 = new THREE.BoxGeometry(2000, 500, 1000);
+    material2 = new THREE.MeshBasicMaterial({
+        color: 0xff00ff,
+        wireframe: true
+    });
+    mesh2 = new THREE.Mesh(geometry2,material2);
+    mesh = new THREE.Mesh(geometry, material);
+    //scene.add(mesh);
+    scene.add(mesh2);
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+    window.addEventListener("mousemove", mouseMove, false);
+}
+function mouseMove(e){
+meX = e.clientX / window.innerWidth * 2;
+meY = e.clientY / window.innerHeight * 2;
+}
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    //mesh.rotation.x += 0.1;
+    //mesh.rotation.y += 0.2;
+    //mesh2.rotation.x += Math.random()/2;
+    //mesh2.rotation.y += (Math.random()/5);
+    
+    mesh2.rotation.x = -1.57 * (meY-1)/2;
+    mesh2.rotation.y = -1.57 * (meX-1)/2+1.57;
+
+    renderer.render(scene, camera);
+
+}
+}
+</script>
+<style>
+body {
+    margin: 0px;
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body onload='dog()'>
+</body>
+</html>
